@@ -1,43 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="MauiAppMinhasCompras.Views.ListaProduto"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppMinhasCompras.Views.ListaProduto"
+             Title="Lista de Produtos">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Novo" Clicked="OnNovoClicked" />
     </ContentPage.ToolbarItems>
 
-    <CollectionView x:Name="Lista"
-                    SelectionMode="Single"
-                    SelectionChanged="OnSelecionado">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <SwipeView>
-                    <SwipeView.RightItems>
-                        <SwipeItems Mode="Reveal">
-                            <SwipeItem Text="Excluir"
-                                       Invoked="OnExcluir"
-                                       CommandParameter="{Binding .}" />
-                        </SwipeItems>
-                    </SwipeView.RightItems>
-                    <Grid Padding="12">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Descricao}" FontAttributes="Bold" />
-                            <Label Text="{Binding Quantidade, StringFormat='Qtd: {0}'}" />
-                            <Label Text="{Binding Preco, StringFormat='Preço: {0:C2}'}" />
-                        </VerticalStackLayout>
-                        <Label Grid.Column="1"
-                               Text="›"
-                               FontSize="24"
-                               VerticalOptions="Center" />
-                    </Grid>
-                </SwipeView>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid RowDefinitions="Auto, *">
+
+        <SearchBar x:Name="barraBusca"
+                   Grid.Row="0"
+                   Placeholder="Pesquisar produtos..."
+                   TextChanged="OnBuscaChanged"/>
+
+        <CollectionView x:Name="Lista" 
+                        Grid.Row="1" 
+                        SelectionMode="Single"
+                        SelectionChanged="OnSelecionado">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem Text="Excluir"
+                                           Invoked="OnExcluir"
+                                           CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid Padding="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Descricao}" FontAttributes="Bold" />
+                                <Label Text="{Binding Quantidade, StringFormat='Qtd: {0}'}" />
+                                <Label Text="{Binding Preco, StringFormat='Preço: {0:C2}'}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1"
+                                   Text="›"
+                                   FontSize="24"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>
