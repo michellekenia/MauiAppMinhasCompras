@@ -1,0 +1,12 @@
+﻿<ContentPage
+    x:Class="MauiAppMinhasCompras.Views.NovoProduto"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Novo Produto">
+    <VerticalStackLayout Padding="16" Spacing="12">
+        <Entry x:Name="txtDescricao" Placeholder="Descrição" />
+        <Entry x:Name="txtQuantidade" Placeholder="Quantidade" Keyboard="Numeric" />
+        <Entry x:Name="txtPreco" Placeholder="Preço" Keyboard="Numeric" />
+        <Button Text="Salvar" Clicked="OnSalvar" />
+    </VerticalStackLayout>
+</ContentPage>

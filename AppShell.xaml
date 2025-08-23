@@ -1,0 +1,12 @@
+<Shell
+    x:Class="MauiAppMinhasCompras.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:MauiAppMinhasCompras.Views"
+    Title="MauiAppMinhasCompras">
+
+    <!-- Página inicial -->
+    <ShellContent
+        Title="Produtos"
+        ContentTemplate="{DataTemplate views:ListaProduto}" />
+</Shell>
