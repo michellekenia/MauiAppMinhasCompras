@@ -15,18 +15,68 @@ namespace MauiAppMinhasCompras.Helpers
         }
 
         public Task<List<Produto>> ListarAsync()
-            => _db.Table<Produto>().OrderBy(p => p.Descricao).ToListAsync();
+        {
+            try
+            {
+                return _db.Table<Produto>().OrderBy(p => p.Descricao).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao listar produtos: {ex.Message}");
+                return Task.FromResult(new List<Produto>());
+            }
+        }
 
         public Task<Produto?> BuscarPorIdAsync(int id)
-            => _db.FindAsync<Produto>(id);
+        {
+            try
+            {
+                return _db.FindAsync<Produto>(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao buscar produto por ID: {ex.Message}");
+                return Task.FromResult<Produto?>(null);
+            }
+        }
 
         public Task<int> InserirAsync(Produto p)
-            => _db.InsertAsync(p);
+        {
+            try
+            {
+                return _db.InsertAsync(p);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao inserir produto: {ex.Message}");
+                return Task.FromResult(0);
+            }
+        }
 
         public Task<int> AtualizarAsync(Produto p)
-            => _db.UpdateAsync(p);
+        {
+            try
+            {
+                return _db.UpdateAsync(p);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao atualizar produto: {ex.Message}");
+                return Task.FromResult(0);
+            }
+        }
 
         public Task<int> RemoverAsync(Produto p)
-            => _db.DeleteAsync(p);
+        {
+            try
+            {
+                return _db.DeleteAsync(p);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao remover produto: {ex.Message}");
+                return Task.FromResult(0);
+            }
+        }
     }
 }

@@ -33,14 +33,27 @@ namespace MauiAppMinhasCompras.Views
                     Preco = double.TryParse(txtPreco.Text, out var p) ? p : 0
                 };
 
-             
                 await App.Db.InserirAsync(produto);
-
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Erro", ex.Message, "OK");
+                await DisplayAlert("Erro", $"Falha ao salvar produto: {ex.Message}", "OK");
+            }
+        }
+
+        private async void OnExcluir(object sender, EventArgs e)
+        {
+            if (_produto is null) return;
+
+            try
+            {
+                await App.Db.RemoverAsync(_produto);
+                await Shell.Current.GoToAsync("..");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", $"Falha ao excluir produto: {ex.Message}", "OK");
             }
         }
     }

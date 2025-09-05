@@ -25,31 +25,54 @@ public partial class EditarProduto : ContentPage
 
     private async Task CarregarAsync(int id)
     {
-        _produto = await App.Db.BuscarPorIdAsync(id);
-        if (_produto != null)
+        try
         {
-            txtDescricao.Text = _produto.Descricao;
-            txtQuantidade.Text = _produto.Quantidade.ToString();
-            txtPreco.Text = _produto.Preco.ToString("0.##");
+            _produto = await App.Db.BuscarPorIdAsync(id);
+            if (_produto != null)
+            {
+                txtDescricao.Text = _produto.Descricao;
+                txtQuantidade.Text = _produto.Quantidade.ToString();
+                txtPreco.Text = _produto.Preco.ToString("0.##");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Falha ao carregar produto: {ex.Message}", "OK");
         }
     }
 
     private async void OnSalvar(object sender, EventArgs e)
     {
-        if (_produto is null) return;
+        try
+        {
+            var produto = new Produto
+            {
+                Descricao = txtDescricao.Text?.Trim() ?? "",
+                Quantidade = double.TryParse(txtQuantidade.Text, out var q) ? q : 0,
+                Preco = double.TryParse(txtPreco.Text, out var p) ? p : 0
+            };
 
-        _produto.Descricao = txtDescricao.Text?.Trim() ?? "";
-        _produto.Quantidade = double.TryParse(txtQuantidade.Text, out var q) ? q : 0;
-        _produto.Preco = double.TryParse(txtPreco.Text, out var p) ? p : 0;
-
-        await App.Db.AtualizarAsync(_produto);
-        await Shell.Current.GoToAsync("..");
+            await App.Db.InserirAsync(produto);
+            await Shell.Current.GoToAsync("..");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Falha ao salvar produto: {ex.Message}", "OK");
+        }
     }
 
     private async void OnExcluir(object sender, EventArgs e)
     {
         if (_produto is null) return;
-        await App.Db.RemoverAsync(_produto);
-        await Shell.Current.GoToAsync("..");
+
+        try
+        {
+            await App.Db.RemoverAsync(_produto);
+            await Shell.Current.GoToAsync("..");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Falha ao excluir produto: {ex.Message}", "OK");
+        }
     }
 }

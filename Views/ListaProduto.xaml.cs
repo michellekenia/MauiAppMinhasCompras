@@ -2,7 +2,7 @@
 using MauiAppMinhasCompras.Models;
 using System.Linq;
 using System.Collections.ObjectModel;
-
+    
 namespace MauiAppMinhasCompras.Views;
 
 public partial class ListaProduto : ContentPage
@@ -45,11 +45,18 @@ public partial class ListaProduto : ContentPage
 
     private async Task CarregarProdutosAsync()
     {
-        _produtos.Clear();
-        var produtosDoBanco = await App.Db.ListarAsync();
-        foreach (var p in produtosDoBanco)
+        try
         {
-            _produtos.Add(p);
+            _produtos.Clear();
+            var produtosDoBanco = await App.Db.ListarAsync();
+            foreach (var p in produtosDoBanco)
+            {
+                _produtos.Add(p);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Falha ao carregar produtos: {ex.Message}", "OK");
         }
     }
 
