@@ -30,7 +30,8 @@ namespace MauiAppMinhasCompras.Views
                 {
                     Descricao = txtDescricao.Text?.Trim() ?? "",
                     Quantidade = double.TryParse(txtQuantidade.Text, out var q) ? q : 0,
-                    Preco = double.TryParse(txtPreco.Text, out var p) ? p : 0
+                    Preco = double.TryParse(txtPreco.Text, out var p) ? p : 0,
+                    Categoria = pckCategoria.SelectedItem?.ToString() // Adicione esta linha
                 };
 
                 await App.Db.InserirAsync(produto);

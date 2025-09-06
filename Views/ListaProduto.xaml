@@ -38,6 +38,7 @@
                                 <Label Text="{Binding Descricao}" FontAttributes="Bold" />
                                 <Label Text="{Binding Quantidade, StringFormat='Qtd: {0}'}" />
                                 <Label Text="{Binding Preco, StringFormat='Preço: {0:C2}'}" />
+                                <Label Text="{Binding Categoria}" FontAttributes="Italic" />
                             </VerticalStackLayout>
                             <Label Grid.Column="1"
                                    Text="›"
