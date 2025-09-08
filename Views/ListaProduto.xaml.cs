@@ -79,4 +79,9 @@ public partial class ListaProduto : ContentPage
     {
         await CarregarEFiltrarProdutosAsync();
     }
+
+    private async void OnRelatorioClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new RelatorioGasto());
+    }
 }

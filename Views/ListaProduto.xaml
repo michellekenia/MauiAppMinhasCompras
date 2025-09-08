@@ -6,6 +6,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Novo" Clicked="OnNovoClicked" />
+        <ToolbarItem Text="Relatório" Clicked="OnRelatorioClicked" />
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto, *">

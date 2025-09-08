@@ -60,9 +60,30 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Views\Class1.cs" />
+	  <Compile Remove="Views\Class2.cs" />
+	  <Compile Remove="Views\NewContent1.xaml.cs" />
+	  <Compile Remove="Views\NewContent2.xaml.cs" />
+	  <Compile Remove="Views\NewPage1.cs" />
+	  <Compile Remove="Views\NewWindow1.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Remove="Views\NewContent1.xaml" />
+	  <MauiXaml Remove="Views\NewContent2.xaml" />
+	  <MauiXaml Remove="Views\NewWindow1.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\RelatorioGasto.xaml.cs">
+	    <DependentUpon>RelatorioGasto.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -70,6 +91,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ListaProduto.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\RelatorioGasto.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
