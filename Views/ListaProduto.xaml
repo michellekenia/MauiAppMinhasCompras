@@ -10,13 +10,29 @@
 
     <Grid RowDefinitions="Auto, *">
 
-        <SearchBar x:Name="barraBusca"
-                   Grid.Row="0"
-                   Placeholder="Pesquisar produtos..."
-                   TextChanged="OnBuscaChanged"/>
+        <VerticalStackLayout Grid.Row="0">
+            <Picker x:Name="pckFiltroCategoria"
+                    Title="Filtrar por Categoria"
+                    SelectedIndexChanged="OnFiltroChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Todos</x:String>
+                        <x:String>Alimentos</x:String>
+                        <x:String>Higiene</x:String>
+                        <x:String>Limpeza</x:String>
+                        <x:String>Eletrônicos</x:String>
+                        <x:String>Outros</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
 
-        <CollectionView x:Name="Lista" 
-                        Grid.Row="1" 
+            <SearchBar x:Name="barraBusca"
+                       Placeholder="Pesquisar produtos..."
+                       TextChanged="OnBuscaChanged"/>
+        </VerticalStackLayout>
+
+        <CollectionView x:Name="Lista"
+                        Grid.Row="1"
                         SelectionMode="Single"
                         SelectionChanged="OnSelecionado">
             <CollectionView.ItemTemplate>

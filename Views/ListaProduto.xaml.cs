@@ -16,10 +16,42 @@ public partial class ListaProduto : ContentPage
         Lista.ItemsSource = _produtos;
     }
 
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await CarregarProdutosAsync();
+        await CarregarEFiltrarProdutosAsync();
+    }
+
+    private async Task CarregarEFiltrarProdutosAsync()
+    {
+        var textoBusca = barraBusca.Text?.ToLower() ?? "";
+        var categoriaSelecionada = pckFiltroCategoria.SelectedItem?.ToString();
+
+        try
+        {
+            var todosOsProdutos = await App.Db.ListarAsync();
+
+            var produtosFiltrados = todosOsProdutos.Where(p =>
+                (string.IsNullOrEmpty(categoriaSelecionada) || categoriaSelecionada == "Todos" || p.Categoria == categoriaSelecionada) &&
+                (string.IsNullOrWhiteSpace(textoBusca) || p.Descricao.ToLower().Contains(textoBusca))
+            ).ToList();
+     
+            _produtos.Clear();
+            foreach (var p in produtosFiltrados)
+            {
+                _produtos.Add(p);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Falha ao carregar produtos: {ex.Message}", "OK");
+        }
+    }
+
+    private async void OnFiltroChanged(object sender, EventArgs e)
+    {
+        await CarregarEFiltrarProdutosAsync();
     }
 
     private async void OnNovoClicked(object sender, EventArgs e)
@@ -39,42 +71,12 @@ public partial class ListaProduto : ContentPage
         if ((sender as SwipeItem)?.CommandParameter is Produto p)
         {
             await App.Db.RemoverAsync(p);
-            await CarregarProdutosAsync();
+            await CarregarEFiltrarProdutosAsync();
         }
     }
 
-    private async Task CarregarProdutosAsync()
+    private async void OnBuscaChanged(object sender, TextChangedEventArgs e)
     {
-        try
-        {
-            _produtos.Clear();
-            var produtosDoBanco = await App.Db.ListarAsync();
-            foreach (var p in produtosDoBanco)
-            {
-                _produtos.Add(p);
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Erro", $"Falha ao carregar produtos: {ex.Message}", "OK");
-        }
-    }
-
-    private void OnBuscaChanged(object sender, TextChangedEventArgs e)
-    {
-        var textoBusca = barraBusca.Text?.ToLower() ?? "";
-
-        if (string.IsNullOrWhiteSpace(textoBusca))
-        {
-            Lista.ItemsSource = _produtos;
-        }
-        else
-        {
-            var produtosFiltrados = _produtos
-                                     .Where(p => p.Descricao.ToLower().Contains(textoBusca))
-                                     .ToList();
-
-            Lista.ItemsSource = produtosFiltrados;
-        }
+        await CarregarEFiltrarProdutosAsync();
     }
 }

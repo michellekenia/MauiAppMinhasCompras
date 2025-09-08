@@ -78,5 +78,10 @@ namespace MauiAppMinhasCompras.Helpers
                 return Task.FromResult(0);
             }
         }
+
+        internal async Task<IEnumerable<object>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
