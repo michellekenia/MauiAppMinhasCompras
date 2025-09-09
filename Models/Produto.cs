@@ -14,5 +14,6 @@ namespace MauiAppMinhasCompras.Models
         public string Descricao { get; set; }
         public double Quantidade { get; set; }
         public double Preco { get; set; }
+        public string Categoria { get; set; } // Novo campo para organizar os itens por tipo
     }
 }
